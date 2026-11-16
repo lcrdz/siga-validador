@@ -1,0 +1,41 @@
+{
+  "name": "siga-validador",
+  "version": "0.1.4",
+  "private": true,
+  "description": "Extensão do Chrome que confere as despesas do SIGA contra as notas fiscais anexadas.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "dev": "node scripts/build.js --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc -p tsconfig.json",
+    "check": "for f in $(find src -name '*.js'); do node --check \"$f\" || exit 1; done && node -e \"JSON.parse(require('fs').readFileSync('manifest.json','utf8'))\" && echo ok",
+    "verify": "npm run check && npm run lint && npm run format:check && npm run typecheck && npm test && npm run build",
+    "package": "npm run build && cd dist && zip -r ../../siga-validador-$(node -p \"require('./manifest.json').version\").zip ."
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/chrome": "0.3.6",
+    "@vitest/coverage-v8": "5.1.0",
+    "esbuild": "0.28.2",
+    "eslint": "10.13.0",
+    "eslint-config-prettier": "10.1.8",
+    "globals": "17.13.0",
+    "jsdom": "31.0.1",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
+  },
+  "dependencies": {
+    "jsqr": "1.4.0"
+  }
+}

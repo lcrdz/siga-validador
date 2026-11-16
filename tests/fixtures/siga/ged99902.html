@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>Visualizador de Arquivo</title></head>
+<body>
+    <embed id="viewer" />
+    <script>
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var tipo = "application/pdf";
+                var blob = new Blob([xhr.response], { type: tipo });
+                var blobUrl = URL.createObjectURL(blob);
+                var viewer = document.getElementById("viewer");
+                viewer.src = blobUrl;
+                viewer.type = tipo;
+            }
+        };
+        xhr.open("GET", "https://sigablob.blob.core.windows.net/siga-arquivos/0F1E2D3C-4B5A-6978-8796-A5B4C3D2E1F0.PDF", true);
+        xhr.responseType = "blob";
+        xhr.setRequestHeader("authorization", "SharedKey sigablob:QVNTSU5BVFVSQUZJQ1RJQ0lB");
+        xhr.setRequestHeader("x-ms-date", "Mon, 16 Nov 2026 14:00:00 GMT");
+        xhr.send();
+    </script>
+</body>
+</html>
